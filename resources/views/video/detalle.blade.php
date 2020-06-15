@@ -13,7 +13,7 @@
         </video>
         <!-- decripcion -->
         <div class="card-body">
-            <h5 class="card-title">Subido por: {{$video->usuario->name}}</h5>
+            <h5 class="card-title">Subido por: <a href="{{ route('canal',['usuario_id'=>$video->usuario->id]) }}">{{$video->usuario->name}}</a></h5>
             <p class="card-text">{{$video->descripcion_vid}}</p>
             <p class="card-text"><small class="text-muted">{{$video->usuario->created_at}}</small></p>
         </div>

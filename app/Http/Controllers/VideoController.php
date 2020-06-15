@@ -146,4 +146,39 @@ class VideoController extends Controller
         return redirect()->route('home')->with(array('respuesta'=>'Video actualizado correctamente'));
     }
 
+    public function buscarVideo($buscar = null, $filtro = null){   
+        if (is_null($buscar)) {
+            $buscar = \Request::get('search');
+        }     
+        if (is_null($filtro) && \Request::get('filtro') && !is_null($buscar)) {
+            $filtro = \Request::get('filtro');
+        }     
+
+        $col="id";
+        $orden="desc";
+        if (!is_null($filtro)) {
+            if ($filtro === 'nuevos') {
+                $col="id";
+                $orden="desc";
+            }
+            if ($filtro === 'antiguos') {
+                $col="id";
+                $orden="asc";              
+            }
+            if ($filtro === 'alfabetico') {
+                $col="titulo_vid";
+                $orden="asc"; 
+            }
+        }
+
+        $videos = Video::where('titulo_vid','LIKE', '%'.$buscar.'%')
+            ->orderBy($col,$orden)
+            ->paginate(5);
+
+        return view('video.buscar',array(
+            'videos'=>$videos,
+            'buscar'=>$buscar
+        ));
+    }
+
 }

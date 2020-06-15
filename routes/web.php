@@ -20,7 +20,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 
 // Rutas del controlador Video
 Route::get('/crear-video', 'VideoController@crearVideo')
@@ -30,14 +30,11 @@ Route::post('/guardar-video', 'VideoController@guardarVideo')
     ->name('guardarVideo')
     ->middleware('auth');
 Route::get('/miniatura/{nombreArchivo}', 'VideoController@traerImagen')
-    ->name('imagenVideo')
-    ->middleware('auth');    
+    ->name('imagenVideo');    
 Route::get('/video-file/{nombreArchivo}', 'VideoController@traerVideo')
-    ->name('traerVideo')
-    ->middleware('auth');    
+    ->name('traerVideo');    
 Route::get('/video/{video_id}', 'VideoController@traerVideoDetalle')
-    ->name('videoDetalle')
-    ->middleware('auth');  
+    ->name('videoDetalle');  
 Route::get('/borrar-video/{video_id}', 'VideoController@borrarVideo')
     ->name('borrarVideo')
     ->middleware('auth');  
@@ -47,6 +44,8 @@ Route::get('/editar-video/{video_id}', 'VideoController@editarVideo')
 Route::post('/editar-video/{video_id}', 'VideoController@actualizarVideo')
     ->name('actualizarVideo')
     ->middleware('auth');    
+Route::get('/buscar/{video_id?}/{filtro?}', 'VideoController@buscarVideo')
+    ->name('buscarVideo');    
     
 // comentarios
 Route::post('/comentario', 'comentarioController@crearComentario')
@@ -55,4 +54,9 @@ Route::post('/comentario', 'comentarioController@crearComentario')
 Route::get('/borrar-comentario/{comentario_id}', 'comentarioController@borrarComentario')
         ->name('borrarComentario')
         ->middleware('auth');
+
+// usuarios
+Route::get('/canal/{usuario_id}', 'usuarioController@canal')
+    ->name('canal');
+
     
